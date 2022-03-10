@@ -10,6 +10,90 @@
           </a>
         </div>
       </div>
+
+      <div class="put_films">
+        <h2>PUT</h2>
+        <div class="contain_films">
+          <v-row justify="center">
+            <a class="item" v-for="(item, count) in allDatas" :key="`${count}`" href="#">
+              <v-btn color="primary" dark @click.stop="dialog = true" @click="updateData(item)">
+                {{item.name}}
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>
+
+              <v-dialog v-model="dialog" max-width="700">
+                <v-card>
+                  <v-card-title class="text-h5">
+                    {{item.name}}
+                  </v-card-title>
+
+                  <v-card-text>
+                    <div class="contain_form">
+                      <div class="name_desc">
+                        <v-row>
+                          <v-col col="5">
+                            <v-text-field label="Nom du film" outlined v-model="data.name"></v-text-field>
+                          </v-col>
+                          <v-col col="5">
+                            <v-textarea outlined name="film description" label="Descritpion du film" v-model="data.description"></v-textarea>
+                          </v-col>
+                        </v-row>
+                      </div>
+                      <div class="infos">
+                        <v-row>
+                          <v-col cols="6" >
+                            <v-subheader>Note du film</v-subheader>
+                            <v-slider v-model="data.notation" class="align-center" :max="5" :min="0" thumb-label step="1"></v-slider>
+                          </v-col>
+                          <v-col cols="6" >
+                            <v-menu
+                              v-model="menuDate"
+                              :close-on-content-click="false"
+                              :nudge-right="40"
+                              transition="scale-transition"
+                              offset-y
+                              min-width="auto"
+                            >
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                  v-model="data.date"
+                                  label="Picker without buttons"
+                                  prepend-icon="mdi-calendar"
+                                  readonly
+                                  v-bind="attrs"
+                                  v-on="on"
+                                ></v-text-field>
+                              </template>
+                              <v-date-picker
+                                v-model="data.date"
+                                @input="menuDate = false"
+                              ></v-date-picker>
+                            </v-menu>
+                          </v-col>
+                          <v-spacer></v-spacer>
+                        </v-row>
+                      </div>
+                      <v-row>
+                        <v-col col="11">
+                          <v-text-field class="url_poster" label="Url d'affiche" outlined v-model="data.poster"></v-text-field>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-card-text>
+
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="red darken-1" text @click="dialog = false">Annuler</v-btn>
+
+                    <v-btn color="green darken-1" text  @click="dialog = false; put(item.id)">Modifier</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </a>
+          </v-row>
+        </div>
+      </div>
+
       <div class="post_films">
         <h2>POST</h2>
         <div class="contain_form">
@@ -98,6 +182,8 @@ export default {
 
       loader: null,
       loading: false,
+
+      dialog: false,
     }
   },
   mounted() {
@@ -122,6 +208,23 @@ export default {
     },
     async deleteItem(item) {
       await axios.delete(`${this.protocol}${this.domain}${this.apiRoute}films/${item}`).then(response => (this.get()));
+    },
+    async put(item) {
+      await axios.put(`${this.protocol}${this.domain}${this.apiRoute}films/${item}`, this.data).then(response => (this.get()));
+      this.data = {
+        name: "",
+        description: "",
+        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        notation: 0,
+        poster: "",
+      }
+    },
+    updateData(item) {
+      this.data.name = item.name;
+      this.data.description = item.description;
+      this.data.date = item.date;
+      this.data.notation = item.notation;
+      this.data.poster = item.poster;
     }
   }
 }

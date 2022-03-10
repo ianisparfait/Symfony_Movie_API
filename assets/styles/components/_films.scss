@@ -25,7 +25,6 @@
       }
       & .delete_item_film {
         position: absolute;
-        z-index: 100000000000;
         right: 15%;
         bottom: 10%;
         background: $whiteColor;
@@ -41,6 +40,15 @@
 
   border-bottom: solid thin;
   border-color: rgb(40 57 68 / 7%);
+}
+
+.put_films {
+  border-bottom: solid thin;
+  border-color: rgb(40 57 68 / 7%);
+  min-height: 100px;
+  & .item {
+    margin: 0vw 6px;
+  }
 }
 
 .post_films {
