@@ -8,6 +8,7 @@ In your terminal:
 3. yarn run watch
 
 Open new terminal and:  
+
 4. symfony server:start ( need symfony CLI )
 /!\ If you does'nt use symfony CLI, replace domain in VUEJS app /!\   
 
