@@ -57,7 +57,7 @@
                               <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                   v-model="data.date"
-                                  label="Picker without buttons"
+                                  label="Date de sortie"
                                   prepend-icon="mdi-calendar"
                                   readonly
                                   v-bind="attrs"
@@ -125,7 +125,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="data.date"
-                      label="Picker without buttons"
+                      label="Date de sortie"
                       prepend-icon="mdi-calendar"
                       readonly
                       v-bind="attrs"
