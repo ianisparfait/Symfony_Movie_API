@@ -35,6 +35,8 @@ export default {
       entries: [
         {title: "Accueil", icon: "mdi-home", path: "/", expansion: false},
         {title: "Compte", icon: "mdi-account", path: "/account", expansion: false},
+        {title: "Conexxion", icon: "mdi-account", path: "/login", expansion: false},
+        {title: "Inscription", icon: "mdi-account", path: "/register", expansion: false},
       ],
       categories: [
         {title: "Action"},
