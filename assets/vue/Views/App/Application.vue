@@ -1,7 +1,10 @@
 <template>
   <div class="container_app">
     <v-app id="inspire">
-      <div class="get_films">
+
+      <app-nav></app-nav>
+
+      <!-- <div class="get_films">
         <h2>GET</h2>
         <div class="contain_films">
           <a class="item" v-for="(item, count) in allDatas" :key="`${count}`" href="#">
@@ -154,7 +157,9 @@
             </v-icon>
           </v-btn>
         </div>
-      </div>
+      </div> -->
+    
+      
     </v-app>
   </div>
 </template>
@@ -162,7 +167,12 @@
 <script>
 import axios from 'axios';
 
+import Nav from './../../Components/Nav.vue';
+
 export default {
+  components: {
+    'app-nav': Nav
+  },
   data() {
     return {
       allDatas: [],
@@ -225,7 +235,7 @@ export default {
       this.data.date = item.date;
       this.data.notation = item.notation;
       this.data.poster = item.poster;
-    }
+    },
   }
 }
 </script>
