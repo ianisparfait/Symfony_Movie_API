@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\FilmRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -53,6 +55,12 @@ class Film
      * @Groups({"read", "write"})
      */
     private $poster;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $categories = [];
 
     public function getId(): ?int
     {
@@ -115,6 +123,18 @@ class Film
     public function setPoster(string $poster): self
     {
         $this->poster = $poster;
+
+        return $this;
+    }
+
+    public function getCategories(): ?array
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(array $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }

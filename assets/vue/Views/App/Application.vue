@@ -158,8 +158,14 @@
           </v-btn>
         </div>
       </div> -->
-    
-      
+
+      <div class="container content pt-5">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in" @after-leave="$root.$emit('mx::scroll::page')">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
     </v-app>
   </div>
 </template>
@@ -196,9 +202,9 @@ export default {
       dialog: false,
     }
   },
-  mounted() {
-    this.get();
-  },
+  // mounted() {
+  //   this.get();
+  // },
   watch: {
     loader () {
       const l = this.loader

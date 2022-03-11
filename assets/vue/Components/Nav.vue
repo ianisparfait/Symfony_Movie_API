@@ -16,7 +16,7 @@
               <v-icon>{{item.icon}}</v-icon>
             </v-list-item-icon>
 
-            <router-link :to="item.path">
+            <router-link :to="item.path" :name="item.name">
               <v-list-item-title>
                 {{item.title}}
               </v-list-item-title>
@@ -33,10 +33,11 @@ export default {
   data() {
     return {
       entries: [
-        {title: "Accueil", icon: "mdi-home", path: "/", expansion: false},
-        {title: "Compte", icon: "mdi-account", path: "/account", expansion: false},
-        {title: "Conexxion", icon: "mdi-account", path: "/login", expansion: false},
-        {title: "Inscription", icon: "mdi-account", path: "/register", expansion: false},
+        {title: "Accueil", icon: "mdi-home", path: "/", expansion: false, name: "Home"},
+        {title: "Compte", icon: "mdi-account", path: "/account", expansion: false, name: "Account"},
+        {title: "Conexxion", icon: "mdi-account", path: "/login", expansion: false, name: "Login"},
+        {title: "Inscription", icon: "mdi-account", path: "/register", expansion: false, name: "Register"},
+        {title: "Ajouter un film", icon: "mdi-account", path: "/post-film", expansion: false, name: "Post"},
       ],
       categories: [
         {title: "Action"},

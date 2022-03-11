@@ -12,4 +12,7 @@ Open new terminal and:
 4. symfony server:start ( need symfony CLI )  
 /!\ If you does'nt use symfony CLI, replace domain in VUEJS app /!\   
 
-- assets/vue/Views/App/Application.vue => `domain: "127.0.0.1:8000/"`
+- assets/vue/Views/App/Application.vue => `domain: "127.0.0.1:8000/"`  
+
+## Modify items per page
+- Got to `.env` file and modify the `itp` line

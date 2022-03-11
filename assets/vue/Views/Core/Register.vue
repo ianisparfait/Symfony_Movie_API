@@ -1,7 +1,7 @@
 <template>
-  <div id="inspire">
-
-  </div>
+  <v-app id="inspire">
+    register
+  </v-app>
 </template>
 
 <style scoped></style>

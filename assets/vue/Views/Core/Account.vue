@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    
+    account
   </v-app>
 </template>
 
