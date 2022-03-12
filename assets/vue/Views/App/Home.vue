@@ -1,13 +1,14 @@
 <template>
   <div class="container_app">
     <v-app id="inspire">
-      <v-row>
-        <v-col cols="12" sm="6">
-          <v-text-field v-model="searchName" label="Recherche par nom" outlined clearable></v-text-field>
-        </v-col>
-      </v-row>
       <div class="get_films">
         <h2>GET</h2>
+        <v-row>
+          <v-col cols="12" sm="6">
+            <v-text-field v-model="searchName" label="Recherche par nom" outlined clearable></v-text-field>
+          </v-col>
+        </v-row>
+
         <div class="contain_films">
           <a class="item" v-for="(item, count) in allDatas" :key="`${count}`" href="#">
             <img :src="item.poster" :alt="`Poster of ${item.name}`">
