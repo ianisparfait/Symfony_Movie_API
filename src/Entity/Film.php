@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\BooleanFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ORM\Entity(repositoryClass=FilmRepository::class)
@@ -15,6 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *   normalizationContext={"groups" = {"read"}},
  *   denormalizationContext={"groups" = {"write"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial"})
  */
 class Film
 {

@@ -6,4 +6,8 @@ api_platform:
     swagger:
         versions: [3]
     defaults:
-        pagination_items_per_page: "%env(int:itp)%"
+        pagination_client_items_per_page: true
+    collection:
+        pagination:
+            # items_per_page_parameter_name: "%env(itp)%"
+            items_per_page_parameter_name: itemsPerPage

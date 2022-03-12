@@ -1,6 +1,11 @@
 <template>
   <div class="container_app">
     <v-app id="inspire">
+      <v-row>
+        <v-col cols="12" sm="6">
+          <v-text-field v-model="searchName" label="Recherche par nom" outlined clearable></v-text-field>
+        </v-col>
+      </v-row>
       <div class="get_films">
         <h2>GET</h2>
         <div class="contain_films">
@@ -30,10 +35,12 @@ export default {
       apiRoute: "api/",
       format: ".json",
 
-      itemsPerPage: 0,
+      itemsPerPage: 3,
       totalItems: 0,
-      totalPages: 0,
+      totalPages: 1,
       currentPage: 1,
+
+      searchName: "",
     }
   },
   created() {
@@ -43,11 +50,12 @@ export default {
     this.all();
   },
   watch: {
-    allDatas(val) {
-      this.itemsPerPage = val.length;
-    },
     currentPage(val) {
-      this.all();
+      if (this.searchName == "") {
+        this.all();
+      } else {
+        this.searchInName();
+      }
 
       if (localStorage.getItem('getCurrentPage')) {
         localStorage.removeItem('getCurrentPage')
@@ -55,20 +63,42 @@ export default {
       } else {
         localStorage.setItem('getCurrentPage', val)
       }
+    },
+    searchName(val) {
+      this.searchInName();
+    },
+    totalPages(val) {
+      this.currentPage = this.currentPage > val ? 1 : this.currentPage
     }
   },
   methods: {
     async all() {
-      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films?page=${this.currentPage}`)
+      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}`)
         .then(res => {
           this.totalItems = res.data['hydra:totalItems']
-          this.totalPages = parseInt(res.data['hydra:view']['hydra:last'].match(/(\d+)/)[0])
+          if (res.data['hydra:view']) {
+            let getPageEqual = res.data['hydra:view']['hydra:last'].match(/page=(\d+)/)[0];
+            this.totalPages = parseInt(getPageEqual.match(/(\d+)/)[0])
+          }
           this.allDatas = res.data['hydra:member'];
         })
     },
     setupCurrentPage() {
       this.currentPage = localStorage.getItem('getCurrentPage') ? parseInt(localStorage.getItem('getCurrentPage')) : 1;
-    }
+    },
+    async searchInName() {
+      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}&name=${this.searchName}`)
+        .then(res => {
+          this.totalItems = res.data['hydra:totalItems']
+          if (res.data['hydra:view'] && res.data['hydra:view']['hydra:last']) {
+            let getPageEqual = res.data['hydra:view']['hydra:last'].match(/page=(\d+)/)[0];
+            this.totalPages = parseInt(getPageEqual.match(/(\d+)/)[0])
+          } else {
+            this.totalPages = 1;
+          }
+          this.allDatas = res.data['hydra:member'];
+        })
+    },
   }
 }
 </script>
