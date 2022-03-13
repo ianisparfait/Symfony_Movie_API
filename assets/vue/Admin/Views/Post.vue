@@ -54,7 +54,19 @@
               <v-select v-model="data.categories" :items="allCategs" chips label="Catégories" multiple outlined :rules="emptyRule" required></v-select>
             </v-col>
             <v-col col="5">
-              <v-text-field class="url_poster" label="Url d'affiche" outlined v-model="data.poster" :rules="emptyRule" required></v-text-field>
+              <!-- <v-text-field class="url_poster" label="Url d'affiche" outlined v-model="data.poster" :rules="emptyRule" required></v-text-field> -->
+
+              <v-file-input v-model="files" color="deep-purple accent-4" counter label="Ajouter une affiche" multiple placeholder="Selectionnez un fichier" prepend-icon="mdi-paperclip" outlined :show-size="1000">
+                <template v-slot:selection="{ index, text }">
+                  <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>
+                    {{ text }}
+                  </v-chip>
+                  <span v-else-if="index === 2" class="text-overline grey--text text--darken-3 mx-2">
+                    +{{ files.length - 2 }} Fichier(s)
+                  </span>
+                </template>
+              </v-file-input>
+
             </v-col>
           </v-row>
         </v-form>
@@ -132,6 +144,8 @@ export default {
         v => !!v || 'Ce champs ne peut pas être vide',
         v => (v && v.length >= 1) || 'Ce champs ne peut pas être vide',
       ],
+
+      files: [],
     }
   },
   watch: {
@@ -143,10 +157,29 @@ export default {
 
       this.loader = null
     },
+    files(val) {
+      console.log(val);
+    }
   },
   methods: {
     async post() {
-      await axios.post(`${this.protocol}${this.domain}${this.apiRoute}films`, this.data).then(response => (this.snackPost = !this.snackPost));
+      await axios.post(`${this.protocol}${this.domain}${this.apiRoute}films`, this.data)
+        .then(response => {
+          if (response.status === 201) {
+            let data = new FormData(),
+              xhr = new XMLHttpRequest(),
+              vm = this;
+            data.append('image', this.files[0]);
+            xhr.open('POST', `${this.protocol}${this.domain}post-film-id`, true)
+            xhr.send(data)
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                vm.snackPost = !vm.snackPost;
+              }
+            }
+
+          }
+        })
       this.data = {
         name: "",
         description: "",

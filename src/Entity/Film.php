@@ -55,7 +55,7 @@ class Film
     private $notation;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @Groups({"read", "write"})
      */
     private $poster;
