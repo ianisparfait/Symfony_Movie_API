@@ -10,10 +10,10 @@
         </v-row>
 
         <div class="contain_films">
-          <a class="item" v-for="(item, count) in allDatas" :key="`${count}`" href="#">
+          <router-link class="item" v-for="(item, count) in allDatas" :key="`${count}`" :to="`/movie/${item.id}`">
             <img :src="`./../../../../uploads/posters/${item.poster}`" :alt="`Poster of ${item.name}`">
             <v-icon color="red" class="delete_item_film" @click="deleteItem(item.id)">mdi-delete-forever</v-icon>
-          </a>
+          </router-link>
         </div>
         <v-pagination v-model="currentPage" :length="totalPages" :total-visible="7"></v-pagination>
       </div>

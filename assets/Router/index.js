@@ -3,7 +3,8 @@ Vue.use(VueRouter)
 
 
 // Pages App
-import Home from './../vue/Views/App/home.vue';
+import Home from './../vue/Views/App/Home.vue';
+import Movie from './../vue/Views/App/Movie.vue';
 
 // Pages Core
 import Login from './../vue/Views/Core/Login.vue';
@@ -21,6 +22,7 @@ const routes = [
   { path: '/register', component: Register, name: "Register" },
   { path: '/account', component: Account, name: "Account" },
   { path: '/post-film', component: Post, name: "Post" },
+  { path: '/movie/:id', component: Movie, name: "Movie" },
 ]
 
 const router = new VueRouter({
