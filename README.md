@@ -19,7 +19,7 @@ In new terminal (in parallel):
 ## Set up application for user(s)
 
 1. Go on **/post-film** page
-2. Fill in the fields and validate. **/!\ Adding a movie will not work if you upload files other than .jpeg, .jpg or .png /!\**
+2. Fill in the fields and validate. */!\ Adding a movie will not work if you upload files other than .jpeg, .jpg or .png /!\*
 3. Go on home page and you can see your movie(s) ! Click on them to view them individually.
 
 ## Get the API documentation
