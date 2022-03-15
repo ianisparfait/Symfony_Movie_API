@@ -16,7 +16,7 @@ In new terminal (in parallel):
 2. Build js/scss files with the command: `yarn run watch` ! This will rebuild a file build with each new change, no need to re-run the command.
 
 
-## Set up application for use tests
+## Set up application for user(s)
 
 1. Go on **/post-film** page
 2. Fill in the fields and validate. **/!\ Adding a movie will not work if you upload files other than .jpeg, .jpg or .png /!\**
