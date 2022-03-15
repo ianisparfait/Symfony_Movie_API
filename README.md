@@ -33,7 +33,23 @@ In new terminal (in parallel):
 3. After finishing and creating the entity, run: `php bin/console make:migration`
 4. After that, run: `php bin/console doctrine:migrations:migrate`
 5. And then, in the specified Entity file add theses lines:
+   - In use bloc
    ```
     use ApiPlatform\Core\Annotation\ApiResource;
     use Symfony\Component\Serializer\Annotation\Groups;
+   ```
+   - In annotion before declaring class
+   ```
+    * @ApiResource(
+    *   normalizationContext={"groups" = {"read"}},
+    *   denormalizationContext={"groups" = {"write"}}
+    * )
+   ```
+   - For each entry in class (private ${..}) adds this annotation line to specify if it is a read, write ...
+   ```
+    * @Groups({"read"})
+   ```
+   OR
+   ```
+    * @Groups({"read", "write"})
    ```
