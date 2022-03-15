@@ -24,7 +24,7 @@ In new terminal (in parallel):
 
 ## Get the API documentation
 1. Go to   
-  `127.0.0.1:{port}/api` || `http://localhost:8000/api`  
+  `127.0.0.1:{port}/api` || `http://localhost:{port}/api`  
 2. Get all resources available from entities
 
 ## Add new Entity and retrieve it in API doc
@@ -38,7 +38,7 @@ In new terminal (in parallel):
     use ApiPlatform\Core\Annotation\ApiResource;
     use Symfony\Component\Serializer\Annotation\Groups;
    ```
-   - In annotion before declaring class
+   - In annotation before declaring class
    ```
     * @ApiResource(
     *   normalizationContext={"groups" = {"read"}},
@@ -53,3 +53,5 @@ In new terminal (in parallel):
    ```
     * @Groups({"read", "write"})
    ```
+6. Go to   
+  `127.0.0.1:{port}/api` || `http://localhost:{port}/api` and see the new entity in API doc !
