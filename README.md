@@ -33,7 +33,7 @@ In new terminal (in parallel):
 3. After finishing and creating the entity, run: `php bin/console make:migration`
 4. After that, run: `php bin/console doctrine:migrations:migrate`
 5. And then, in the specified Entity file add theses lines:
-  - ```
-  - use ApiPlatform\Core\Annotation\ApiResource;
+   ```
+    use ApiPlatform\Core\Annotation\ApiResource;
     use Symfony\Component\Serializer\Annotation\Groups;
-  - ```
+   ```
