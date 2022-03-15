@@ -192,7 +192,7 @@ export default {
               xhr = new XMLHttpRequest(),
               vm = this;
             data.append('image', this.files[0]);
-            xhr.open('POST', `${this.protocol}${this.domain}post-film-id`, true)
+            xhr.open('POST', `${this.$domain}post-film-id`, true)
             xhr.send(data)
             xhr.onreadystatechange = function() {
               if (xhr.readyState == 4 && xhr.status == 200) {

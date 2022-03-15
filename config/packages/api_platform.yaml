@@ -4,7 +4,10 @@ api_platform:
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:
-        versions: [3]
+        api_keys:
+            apiKey:
+                name: Authorization
+                type: header
     defaults:
         pagination_client_items_per_page: true
     collection:

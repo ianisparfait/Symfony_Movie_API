@@ -12,8 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
- *   normalizationContext={"groups" = {"read"}},
- *   denormalizationContext={"groups" = {"write"}}
+ *   normalizationContext={"groups" = {"read"}}
  * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -28,20 +27,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $email;
 
     /**
-     * @ORM\Column(type="json")
-     * @Groups({"read", "write"})
+     * @ORM\Column(type="array")
+     * @Groups({"read"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"read", "write"})
+     * @Groups({"read"})
      */
     private $password;
 
@@ -83,21 +82,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
+    public function getRoles()
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
+        if (empty($this->roles)) {
+            return ['ROLE_USER'];
+        }
+        return $this->roles;
+    }
+    public function setRoles(array $role)
+    {
+        $this->roles = [];
+        for ($i = 0; $i < sizeOf($role); $i++) {
+            array_push($this->roles, $role[$i]->getValue());
+        }
+        return $this->roles;
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
 
     /**
      * @see PasswordAuthenticatedUserInterface
