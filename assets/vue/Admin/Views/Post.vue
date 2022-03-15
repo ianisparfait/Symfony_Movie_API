@@ -56,7 +56,7 @@
             <v-col col="5">
               <!-- <v-text-field class="url_poster" label="Url d'affiche" outlined v-model="data.poster" :rules="emptyRule" required></v-text-field> -->
 
-              <v-file-input v-model="files" color="deep-purple accent-4" counter label="Ajouter une affiche" multiple placeholder="Selectionnez un fichier" prepend-icon="mdi-paperclip" outlined :show-size="1000">
+              <v-file-input accept=".png, .jpg, .jpeg" v-model="files" color="deep-purple accent-4" counter label="Ajouter une affiche" multiple placeholder="Selectionnez un fichier" prepend-icon="mdi-paperclip" outlined :show-size="1000">
                 <template v-slot:selection="{ index, text }">
                   <v-chip v-if="index < 2" color="deep-purple accent-4" dark label small>
                     {{ text }}
@@ -107,7 +107,7 @@
     <v-snackbar v-model="snackPost" :timeout="timeoutSnack">
       {{ textSnack }}
       <template v-slot:action="{ attrs }">
-        <v-btn color="green" text v-bind="attrs" @click="snackPost = false">
+        <v-btn :color="`${fileUploaded ? 'green' : 'red'}`" text v-bind="attrs" @click="snackPost = false">
           Fermer
         </v-btn>
       </template>
@@ -145,8 +145,9 @@ export default {
       dialog: false,
 
       snackPost: false,
-      textSnack: 'Film ajouté avec succés',
-      timeoutSnack: 2000,
+      textSnack: "",
+      timeoutSnack: 1500,
+      fileUploaded: false,
 
       allCategs: [
         "Action",
@@ -174,6 +175,16 @@ export default {
 
       files: [],
       openDurationMenu: false,
+      pickerOpts: {
+        types: [{
+          description: 'Images',
+          accept: {
+            'image/*': ['.png', '.jpeg', '.jpg']
+          }
+        }],
+        excludeAcceptAllOption: true,
+        multiple: false
+      }
     }
   },
   watch: {
@@ -181,7 +192,7 @@ export default {
       const l = this.loader
       this[l] = !this[l]
 
-      setTimeout(() => (this[l] = false), 1000)
+      setTimeout(() => (this[l] = false), this.timeoutSnack)
 
       this.loader = null
     },
@@ -199,7 +210,13 @@ export default {
             xhr.send(data)
             xhr.onreadystatechange = function() {
               if (xhr.readyState == 4 && xhr.status == 200) {
+                vm.fileUploaded = true;
+                vm.textSnack = 'Film ajouté avec succés';
                 vm.snackPost = !vm.snackPost;
+              } else if (xhr.status == 400) {
+                vm.fileUploaded = false;
+                vm.textSnack = 'Ajout refusé';
+                vm.snackPost = !vm.snackPost
               }
             }
 

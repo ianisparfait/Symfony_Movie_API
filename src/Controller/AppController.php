@@ -33,31 +33,36 @@ class AppController extends AbstractController
      */
     public function addPoster(FileUploader $fileUploader)
     {
-				$movieAll = $this->em->getRepository(Film::class)->findAll();
-				$movie = $this->em->getRepository(Film::class)->findOneBy(['id' => $movieAll[sizeof($movieAll)-1]->getId()]);
+        $movieAll = $this->em->getRepository(Film::class)->findAll();
+        $movie = $this->em->getRepository(Film::class)->findOneBy(['id' => $movieAll[sizeof($movieAll)-1]->getId()]);
+        $res = "";
+        $sc = 0;
 
         if (isset($_FILES['image'])) {
-					$img = $_FILES['image'];
-					$file = new UploadedFile($img['tmp_name'], $img['name'], $img['type']);
-					if(!is_null($file)){
-						$fileName = $fileUploader->upload($file, 'dossier_img');
+            $img = $_FILES['image'];
+            $file = new UploadedFile($img['tmp_name'], $img['name'], $img['type']);
+            if(!is_null($file)){
+                $fileName = $fileUploader->upload($file, 'dossier_img');
 
-						if (is_string($fileName)) {
-							$movie->setPoster($fileName);
-						}else{
-							$this->addFlash("danger",$fileName->getMessage());
-							$movie->setPoster('');
-						}
-					}
-					$this->em->persist($movie);
-
+                if (is_string($fileName)) {
+                    $movie->setPoster($fileName);
+                    $this->em->persist($movie);
+                    $res = "Adding poster into movie row";
+                    $sc = 200;
+                }else{
+                    $fileUploader->errMessage();
+                    $this->em->remove($movie);
+                    $res = "Delete file and row in db";
+                    $sc = 400;
+                }
+            }
         }
 
         $this->em->flush();
 
         $response = new Response();
-        $response->setContent('adding poster into movie row');
-        $response->setStatusCode(200);
+        $response->setContent($res);
+        $response->setStatusCode($sc);
         $response->headers->set('Content-Type', 'text/html');
         return $response;
     }
