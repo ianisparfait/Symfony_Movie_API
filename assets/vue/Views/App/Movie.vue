@@ -9,11 +9,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      protocol: "http://",
-      domain: "127.0.0.1:8000/",
-      apiRoute: "api/",
-      format: ".json",
-
       movieID: 0,
 
       movieDatas: {},
@@ -30,7 +25,7 @@ export default {
       this.retrieveMovie();
     },
     async retrieveMovie() {
-      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films/${this.movieID}`)
+      await axios.get(`${this.$api}films/${this.movieID}`)
         .then(res => {
           this.movieDatas = res.data
         })

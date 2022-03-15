@@ -189,10 +189,6 @@ export default {
         notation: 0,
         poster: "",
       },
-      protocol: "http://",
-      domain: "127.0.0.1:8000/",
-      apiRoute: "api/",
-      format: ".json",
 
       menuDate: false,
 
@@ -217,16 +213,16 @@ export default {
   },
   methods: {
     async get() {
-      this.allDatas = await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films${this.format}`).then(response => (this.allDatas = response.data));
+      this.allDatas = await axios.get(`${this.$api}films${this.$jsonFormat}`).then(response => (this.allDatas = response.data));
     },
     async post() {
-      await axios.post(`${this.protocol}${this.domain}${this.apiRoute}films`, this.data).then(response => (this.get()));
+      await axios.post(`${this.$api}films`, this.data).then(response => (this.get()));
     },
     async deleteItem(item) {
-      await axios.delete(`${this.protocol}${this.domain}${this.apiRoute}films/${item}`).then(response => (this.get()));
+      await axios.delete(`${this.$api}films/${item}`).then(response => (this.get()));
     },
     async put(item) {
-      await axios.put(`${this.protocol}${this.domain}${this.apiRoute}films/${item}`, this.data).then(response => (this.get()));
+      await axios.put(`${this.$api}films/${item}`, this.data).then(response => (this.get()));
       this.data = {
         name: "",
         description: "",

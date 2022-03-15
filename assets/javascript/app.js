@@ -7,6 +7,9 @@ import { router as r } from "../Router";
 import './../styles/app.scss';
 
 Vue.config.productionTip = false
+Vue.prototype.$domain = `${window.location.protocol}/`
+Vue.prototype.$api = `${window.location.protocol}/api/`
+Vue.prototype.$jsonFormat = ".json"
 
 new Vue({
   vuetify,

@@ -29,11 +29,6 @@ export default {
     return {
       allDatas: [],
 
-      protocol: "http://",
-      domain: "127.0.0.1:8000/",
-      apiRoute: "api/",
-      format: ".json",
-
       itemsPerPage: 3,
       totalItems: 0,
       totalPages: 1,
@@ -72,7 +67,7 @@ export default {
   },
   methods: {
     async all() {
-      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}`)
+      await axios.get(`${this.$api}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}`)
         .then(res => {
           this.totalItems = res.data['hydra:totalItems']
           if (res.data['hydra:view'] && res.data['hydra:totalItems'] > this.itemsPerPage) {
@@ -86,7 +81,7 @@ export default {
       this.currentPage = localStorage.getItem('getCurrentPage') ? parseInt(localStorage.getItem('getCurrentPage')) : 1;
     },
     async searchInName() {
-      await axios.get(`${this.protocol}${this.domain}${this.apiRoute}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}&name=${this.searchName}`)
+      await axios.get(`${this.$api}films?itemsPerPage=${this.itemsPerPage}&page=${this.currentPage}&name=${this.searchName}`)
         .then(res => {
           this.totalItems = res.data['hydra:totalItems']
           if (res.data['hydra:view'] && res.data['hydra:view']['hydra:last']) {

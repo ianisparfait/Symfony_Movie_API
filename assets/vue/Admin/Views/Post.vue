@@ -132,10 +132,6 @@ export default {
         duration: 0,
         director: "",
       },
-      protocol: "http://",
-      domain: "127.0.0.1:8000/",
-      apiRoute: "api/",
-      format: ".json",
 
       menuDate: false,
 
@@ -175,16 +171,6 @@ export default {
 
       files: [],
       openDurationMenu: false,
-      pickerOpts: {
-        types: [{
-          description: 'Images',
-          accept: {
-            'image/*': ['.png', '.jpeg', '.jpg']
-          }
-        }],
-        excludeAcceptAllOption: true,
-        multiple: false
-      }
     }
   },
   watch: {
@@ -199,7 +185,7 @@ export default {
   },
   methods: {
     async post() {
-      await axios.post(`${this.protocol}${this.domain}${this.apiRoute}films`, this.data)
+      await axios.post(`${this.$api}films`, this.data)
         .then(response => {
           if (response.status === 201) {
             let data = new FormData(),
