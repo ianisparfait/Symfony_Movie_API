@@ -66,6 +66,24 @@ class Film
      */
     private $categories = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $duration;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $actors = [];
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read", "write"})
+     */
+    private $director;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +157,42 @@ class Film
     public function setCategories(array $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    public function getDuration(): ?string
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?string $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getActors(): ?array
+    {
+        return $this->actors;
+    }
+
+    public function setActors(?array $actors): self
+    {
+        $this->actors = $actors;
+
+        return $this;
+    }
+
+    public function getDirector(): ?string
+    {
+        return $this->director;
+    }
+
+    public function setDirector(?string $director): self
+    {
+        $this->director = $director;
 
         return $this;
     }

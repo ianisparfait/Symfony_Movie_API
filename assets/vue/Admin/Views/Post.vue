@@ -69,6 +69,30 @@
 
             </v-col>
           </v-row>
+          <v-row>
+            <v-col col="5"> <!-- Duration -->
+              <v-menu ref="menu" v-model="openDurationMenu" :close-on-content-click="false" :nudge-right="40" :return-value.sync="data.duration" transition="scale-transition" offset-y max-width="290px" min-width="290px">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field v-model="data.duration" label="Durée du film" prepend-icon="mdi-clock-time-four-outline" readonly v-bind="attrs" v-on="on"></v-text-field>
+                </template>
+                <v-time-picker v-if="openDurationMenu" v-model="data.duration" full-width @click:minute="$refs.menu.save(data.duration)"></v-time-picker>
+              </v-menu>
+            </v-col>
+            <v-col col="5"> <!-- Director -->
+              <v-text-field label="Nom du réalisateur" outlined v-model="data.director" :rules="emptyRule" required></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col col="10"> <!-- Actors -->
+              <v-combobox v-model="data.actors" chips clearable label="Acteurs principaux" multiple prepend-icon="mdi-filter-variant" solo>
+                <template v-slot:selection="{ attrs, item, select, selected }">
+                  <v-chip v-bind="attrs" :input-value="selected" close @click="select" @click:close="remove(item)">
+                    <strong>{{ item }}</strong>&nbsp;
+                  </v-chip>
+                </template>
+              </v-combobox>
+            </v-col>
+          </v-row>
         </v-form>
 
         <v-btn :loading="loading" :disabled="loading" color="blue-grey" class="ma-2 white--text" @click="loader = 'loading'; validate()">
@@ -104,6 +128,9 @@ export default {
         notation: 0,
         poster: "",
         categories: [],
+        actors: [],
+        duration: 0,
+        director: "",
       },
       protocol: "http://",
       domain: "127.0.0.1:8000/",
@@ -146,6 +173,7 @@ export default {
       ],
 
       files: [],
+      openDurationMenu: false,
     }
   },
   watch: {
@@ -157,9 +185,6 @@ export default {
 
       this.loader = null
     },
-    files(val) {
-      console.log(val);
-    }
   },
   methods: {
     async post() {
@@ -187,11 +212,18 @@ export default {
         notation: 0,
         poster: "",
         categories: [],
+        actors: [],
+        duration: 0,
+        director: "",
       };
     },
     validate () {
       this.$refs.form.validate();
       this.validForm ? this.post() : "";
+    },
+    remove (item) {
+      this.data.actors.splice(this.data.actors.indexOf(item), 1)
+      this.data.actors = [...this.data.actors]
     },
   }
 }
