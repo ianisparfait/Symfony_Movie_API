@@ -18,7 +18,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *   normalizationContext={"groups" = {"read"}},
  *   denormalizationContext={"groups" = {"write"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"name": "partial"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "partial", "description": "partial", "date": "partial", "notation": "partial", "categories": "partial","actors": "partial","duration": "partial","director": "partial", })
  */
 class Film
 {
