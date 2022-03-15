@@ -11,3 +11,20 @@ api_platform:
         pagination:
             # items_per_page_parameter_name: "%env(itp)%"
             items_per_page_parameter_name: itemsPerPage
+    formats:
+        jsonld:
+            mime_types:
+                - application/ld+json
+        json:
+            mime_types:
+                - application/json
+        html:
+            mime_types:
+                - text/html
+        jsonhal:
+            mime_types:
+                - application/hal+json
+        csv:
+            mime_types:
+                - application/csv
+
