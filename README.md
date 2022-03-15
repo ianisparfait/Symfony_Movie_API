@@ -9,7 +9,7 @@ In your terminal (at the root of the project):
 4. `php bin/console make:migration`
 5. `php bin/console doctrine:migrations:migrate`
 6. Run the symfony server with the command: `symfony server:start` || Open project with laragon, mamp, xamp, wamp...  
-  **/!\ If you does'nt use symfony CLI, replace domain in VUEJS app /!\** =>  assets/vue/{files} => `domain: "127.0.0.1:8000/"`
+  **/!\ If you does'nt use symfony CLI or your domain is different of "127.0.0.1:8000", replace domain in VUEJS app /!\** =>  assets/vue/{files} => `domain: "127.0.0.1:8000/"`
 
 In new terminal (in parallel):
 1. `yarn install`
