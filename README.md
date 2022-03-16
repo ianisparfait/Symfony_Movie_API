@@ -55,3 +55,16 @@ In new terminal (in parallel):
    ```
 6. Go to   
   `127.0.0.1:{port}/api` || `http://localhost:{port}/api` and see the new entity in API doc !
+
+## JWT Token
+### Generate private/public key and use
+1. Run `openssl genrsa -out config/jwt/private.pem -aes256 4096` in terminal (project root) to create Private token
+2. Follow instructions and save your passphrase
+3. Run `openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem` in terminal (project root) to create Public token
+4. Follow instructions with same passphrase
+5. Create .env.local file at the root of the project and write:
+    ```
+      ###> lexik/jwt-authentication-bundle ###
+      JWT_PASSPHRASE=kaherecode
+      ###< lexik/jwt-authentication-bundle ###
+    ```
