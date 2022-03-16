@@ -58,6 +58,7 @@ In new terminal (in parallel):
 
 ## JWT Token
 ### Generate private/public key and use
+**!!! Create jwt folder in /config**
 1. Run `openssl genrsa -out config/jwt/private.pem -aes256 4096` in terminal (project root) to create Private token
 2. Follow instructions and save your passphrase
 3. Run `openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem` in terminal (project root) to create Public token
