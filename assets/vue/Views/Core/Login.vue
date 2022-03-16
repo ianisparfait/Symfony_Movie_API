@@ -4,7 +4,7 @@
     <v-form>
       <v-text-field v-model="datas.email" outlined label="Email" required type="email" :rules="[rules.required, rules.min]"></v-text-field>
       <v-text-field v-model="datas.password" @click:append="show = !show" outlined label="Mot de passe" required :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.required, rules.min]" :type="show ? 'text' : 'password'"></v-text-field>
-      <v-btn outlined @click="login">Connexion</v-btn>
+      <v-btn outlined @click="checkLogin">Connexion</v-btn>
     </v-form>
     <router-link to="/register">Pas de compte ? Inscrivez-vous</router-link>
 
@@ -41,30 +41,31 @@ export default {
       loged: false,
       textSnack: "",
       snackPost: false,
-      timeoutSnack: 1500
+      timeoutSnack: 1500,
     }
   },
   methods: {
-    login() {
-      let xhr = new XMLHttpRequest(),
-          data = new FormData(),
-          vm = this;
-
-      data.append('user_email', this.datas.email);
-      data.append('user_password', this.datas.password);
-      xhr.open('POST', `${this.$domain}login-user-logic`, true)
-      xhr.send(data)
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          vm.loged = true;
-          vm.textSnack = xhr.response;
-          vm.snackPost = !vm.snackPost;
-        } else if (xhr.status == 400) {
-          vm.loged = false;
-          vm.textSnack = xhr.response;
-          vm.snackPost = !vm.snackPost
-        }
-      }
+    async checkLogin() {
+      await axios.post(`${this.$api}login`, this.datas)
+        .then(res => {
+          let tempToken = "";
+          tempToken = res.data.token;
+          if (tempToken != "") {
+            this.login(tempToken)
+          }
+        })
+    },
+    async login(tok) {
+      let vm = this
+      axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
+      await axios.get(`${this.$api}users.json`)
+        .then(res => {
+          if (res.status === 200) {
+            vm.textSnack = "Connexion réussi !"
+            vm.snackPost = true;
+            vm.loged = true;
+          }
+        })
     }
   }
 }

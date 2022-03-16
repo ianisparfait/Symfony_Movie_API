@@ -31,20 +31,26 @@ export default {
     }
   },
   methods: {
-    register() {
-      let xhr = new XMLHttpRequest(),
-          data = new FormData(),
-          vm = this;
+    // register() {
+    //   let xhr = new XMLHttpRequest(),
+    //       data = new FormData(),
+    //       vm = this;
 
-      data.append('user_email', this.datas.email);
-      data.append('user_password', this.datas.password);
-      xhr.open('POST', `${this.$domain}register-user`, true)
-      xhr.send(data)
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          console.log('registred')
-        }
-      }
+    //   data.append('user_email', this.datas.email);
+    //   data.append('user_password', this.datas.password);
+    //   xhr.open('POST', `${this.$domain}register-user`, true)
+    //   xhr.send(data)
+    //   xhr.onreadystatechange = function() {
+    //     if (xhr.readyState == 4 && xhr.status == 200) {
+    //       console.log('registred')
+    //     }
+    //   }
+    // }
+    async register() {
+      await axios.post(`${this.$api}users`, this.datas)
+        .then(res => {
+          console.log("registred");
+        })
     }
   }
 }
