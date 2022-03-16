@@ -56,7 +56,10 @@ export default {
         })
     },
     async login(tok) {
-      let vm = this
+      let vm = this,
+          data = new FormData(),
+          xhr = new XMLHttpRequest();
+
       axios.defaults.headers.common = {'Authorization': `Bearer ${tok}`}
       await axios.get(`${this.$api}users.json`)
         .then(res => {
@@ -64,6 +67,14 @@ export default {
             vm.textSnack = "Connexion réussi !"
             vm.snackPost = true;
             vm.loged = true;
+            data.append("user_loged", res.data[0].email)
+            xhr.open("POST", `${this.$domain}session-logged-in`, true)
+            xhr.send(data);
+            xhr.onreadystatechange = function() {
+              if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log('add user in session')
+              }
+            }
           }
         })
     }

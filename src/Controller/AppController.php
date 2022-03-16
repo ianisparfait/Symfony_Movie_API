@@ -7,15 +7,18 @@ use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppController extends AbstractController
 {
     private $em;
+    private $requestStack;
 
-    public function __construct(EntityManagerInterface $em) {
+    public function __construct(EntityManagerInterface $em, RequestStack $requestStack) {
         $this->em = $em;
+        $this->requestStack = $requestStack;
     }
 
     /**
@@ -23,6 +26,9 @@ class AppController extends AbstractController
      */
     public function index(): Response
     {
+        $session = $this->requestStack->getSession();
+        // dump($session->get('userLoged', "Error in user session"));
+        // die();
         return $this->render('app/index.html.twig', [
             'controller_name' => 'AppController',
         ]);

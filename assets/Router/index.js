@@ -8,6 +8,7 @@ import Movie from './../vue/Views/App/Movie.vue';
 
 // Pages Core
 import Login from './../vue/Views/Core/Login.vue';
+import Logout from './../vue/Views/Core/Logout.vue';
 import Register from './../vue/Views/Core/Register.vue';
 import Account from './../vue/Views/Core/Account.vue';
 
@@ -23,6 +24,7 @@ const routes = [
   { path: '/account', component: Account, name: "Account" },
   { path: '/post-film', component: Post, name: "Post" },
   { path: '/movie/:id', component: Movie, name: "Movie" },
+  { path: '/logout-out', component: Logout, name: "Logout" },
 ]
 
 const router = new VueRouter({

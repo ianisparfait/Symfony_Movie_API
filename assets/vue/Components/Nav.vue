@@ -38,6 +38,7 @@ export default {
         {title: "Connexion", icon: "mdi-account", path: "/login", expansion: false, name: "Login"},
         // {title: "Inscription", icon: "mdi-account", path: "/register", expansion: false, name: "Register"},
         {title: "Ajouter un film", icon: "mdi-account", path: "/post-film", expansion: false, name: "Post"},
+        {title: "Déconnexion", icon: "mdi-account", path: "/logout-out", expansion: false, name: "Logout"},
       ],
       categories: [
         {title: "Action"},
