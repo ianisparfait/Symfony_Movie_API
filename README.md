@@ -65,6 +65,6 @@ In new terminal (in parallel):
 5. Create .env.local file at the root of the project and write:
     ```
       ###> lexik/jwt-authentication-bundle ###
-      JWT_PASSPHRASE=kaherecode
+      JWT_PASSPHRASE=your_pass_phrase
       ###< lexik/jwt-authentication-bundle ###
     ```
